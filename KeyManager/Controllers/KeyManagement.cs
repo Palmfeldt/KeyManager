@@ -9,32 +9,59 @@ namespace KeyManager.Controllers
 
     [ApiController]
     [Route("[controller]")]
-    public class KeyManagement : ControllerBase
+    public class KeyManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
     {
 
 
-        private readonly ILogger<KeyManagement> _logger;
-        private QueryController queryController;
-
-        public KeyManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options)
-        {
-            _logger = logger;
-            queryController = new(options);
-        }
+        private readonly ILogger<KeyManagement> _logger = logger;
+        private QueryController queryController = new(options);
 
         [HttpGet(Name = "GetAllUsers")]
-        public string Get()
+        public ActionResult<IEnumerable<User>> Get()
         {
-            List<User> test = queryController.RetriveAll();
-            return test[0].ToString();
+            var users = queryController.RetriveAll();
+            return Ok(users);
         }
 
-        [HttpPost(Name = "AddKey")]
-        public string Post()
+        [HttpGet("{id}", Name = "GetUserById")]
+        public ActionResult<User> Get(int id)
         {
-            queryController.AddUser();
-            return "Woah";
+            var user = queryController.RetrieveById(id);
+            if (user == null)
+            {
+                return NotFound("User not found");
+            }
+            return Ok(user);
+        }
+
+        [HttpPost(Name = "AddUser")]
+        public IActionResult Post([FromBody] User newUser)
+        {
+            queryController.AddUser(newUser);
+            return CreatedAtRoute("GetUserById", new { id = newUser.Id }, newUser);
+        }
+
+        [HttpPut("{id}", Name = "UpdateUser")]
+        public IActionResult Put(int id, [FromBody] User user)
+        {
+            var success = queryController.UpdateUser(id, user);
+            if (!success)
+            {
+                return NotFound("User not found or update failed");
+            }
+            return Ok("User updated successfully");
+        }
+
+        [HttpDelete("{id}", Name = "DeleteUser")]
+        public IActionResult Delete(int id)
+        {
+            var success = queryController.DeleteUser(id);
+            if (!success)
+            {
+                return NotFound("User not found");
+            }
+            return Ok("User deleted successfully");
         }
     }
-
 }
+

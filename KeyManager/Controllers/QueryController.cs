@@ -14,7 +14,7 @@ namespace KeyManager.Controllers
             return [.. context.Users];
         }
 
-        public bool AddUser()
+        public bool AddDummy()
         {
             var newUser = new User { FirstName = "John", LastName = "Doe", SSN = 123456789 };
             context.Users.Add(newUser);
@@ -22,12 +22,51 @@ namespace KeyManager.Controllers
             return true;
         }
 
-        public Models.User Search(String ssn)
+        public bool AddUser(User user)
         {
-            var user = context.Users.Find(1);
+            context.Users.Add(user);
+            context.SaveChanges();
+            return true;
+        }
+
+        public User RetrieveById(int id)
+        {
+            var user = context.Users.Find(id);
+            if (user is null)
+            {
+                throw new KeyNotFoundException($"User with ID {id} not found.");
+            }
             return user;
         }
 
-      
+        public bool DeleteUser(int id)
+        {
+            User user = new User() { Id = id };
+            context.Users.Attach(user);
+            context.Users.Remove(user);
+            context.SaveChanges();
+            return true;
+        }
+
+        public bool UpdateUser(int id, User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Searches and returns user based on SSN.
+        /// </summary>
+        /// <param name="ssn"></param>
+        /// <returns>User object</returns>
+        public User Search(String ssn)
+        {
+            var user = context.Users.Find(ssn);
+
+            if (user is null)
+            {
+                throw new KeyNotFoundException($"User with SSN {ssn} not found.");
+            }
+            return user;
+        }
     }
 }
