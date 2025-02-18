@@ -1,5 +1,4 @@
 using KeyManager.Data;
-using KeyManager.Controllers;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

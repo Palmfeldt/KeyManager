@@ -1,6 +1,4 @@
-﻿
-using System.Runtime.Intrinsics.X86;
-using KeyManager.Data;
+﻿using KeyManager.Data;
 using KeyManager.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,16 +26,7 @@ namespace KeyManager.Controllers.QueryHandlers
             {
                 return key;
             }
-            throw new KeyNotFoundException($"User with ID {id} not found.");
-        }
-
-        public bool DeleteUser(int id)
-        {
-            Key key = new() { Id = id };
-            context.Keys.Attach(key);
-            context.Keys.Remove(key);
-            context.SaveChanges();
-            return true;
+            throw new KeyNotFoundException($"Key with ID {id} not found.");
         }
 
         List<Key> IQueryController<Key>.RetriveAll()
@@ -90,5 +79,6 @@ namespace KeyManager.Controllers.QueryHandlers
         {
             throw new NotImplementedException();
         }
+
     }
 }

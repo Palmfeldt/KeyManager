@@ -4,7 +4,6 @@ using KeyManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-
 namespace KeyManager.Controllers
 {
 
@@ -16,6 +15,10 @@ namespace KeyManager.Controllers
         private readonly ILogger<KeyManagement> _logger = logger;
         private UserQueryController queryController = new(options);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet(Name = "GetAllUsers")]
         public ActionResult<IEnumerable<User>> Get()
         {

@@ -61,7 +61,7 @@ CREATE TABLE public."UserAddresses" (
 
 
 -- Insert dummy users
-INSERT INTO users (first_name, last_name, ssn) VALUES
+INSERT INTO "Users" ("FirstName", "LastName", "SSN") VALUES
 ('John', 'Doe', 123456789),
 ('Jane', 'Smith', 987654321),
 ('Alice', 'Johnson', 555443322),

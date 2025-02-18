@@ -23,43 +23,43 @@ namespace KeyManager.Controllers
         }
 
         [HttpGet("{id}", Name = "GetKeyById")]
-        public ActionResult<User> Get(int id)
+        public ActionResult<Key> Get(int id)
         {
-            var user = queryController.RetrieveById(id);
-            if (user == null)
+            var key = queryController.RetrieveById(id);
+            if (key == null)
             {
-                return NotFound("User not found");
+                return NotFound("Key not found");
             }
-            return Ok(user);
+            return Ok(key);
         }
 
         [HttpPost(Name = "AddKey")]
-        public IActionResult Post([FromBody] Key newUser)
+        public IActionResult Post([FromBody] Key key)
         {
-            queryController.Add(newUser);
-            return CreatedAtRoute("GetUserById", new { id = newUser.Id }, newUser);
+            queryController.Add(key);
+            return CreatedAtRoute("GetKeyById", new { id = key.Id }, key);
         }
 
-        [HttpPut("{id}", Name = "UpdateUser")]
+        [HttpPut("{id}", Name = "UpdateKey")]
         public IActionResult Put(int id, [FromBody] Key key)
         {
             var success = queryController.Update(id, key);
             if (!success)
             {
-                return NotFound("User not found or update failed");
+                return NotFound("Key not found or update failed");
             }
-            return Ok("User updated successfully");
+            return Ok("Key updated successfully");
         }
 
-        [HttpDelete("{id}", Name = "DeleteUser")]
+        [HttpDelete("{id}", Name = "DeleteKey")]
         public IActionResult Delete(int id)
         {
-            var success = queryController.DeleteUser(id);
+            var success = queryController.Delete(id);
             if (!success)
             {
-                return NotFound("User not found");
+                return NotFound("Key not found");
             }
-            return Ok("User deleted successfully");
+            return Ok("Key deleted successfully");
         }
     }
 }
