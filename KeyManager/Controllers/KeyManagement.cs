@@ -1,23 +1,40 @@
+using KeyManager.Data;
+using KeyManager.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
-namespace KeyManager.Controllers;
 
-[ApiController]
-[Route("[controller]")]
-public class KeyManagement : ControllerBase
+namespace KeyManager.Controllers
 {
- 
 
-    private readonly ILogger<KeyManagement> _logger;
-
-    public KeyManagement(ILogger<KeyManagement> logger)
+    [ApiController]
+    [Route("[controller]")]
+    public class KeyManagement : ControllerBase
     {
-        _logger = logger;
+
+
+        private readonly ILogger<KeyManagement> _logger;
+        private QueryController queryController;
+
+        public KeyManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options)
+        {
+            _logger = logger;
+            queryController = new(options);
+        }
+
+        [HttpGet(Name = "GetAllUsers")]
+        public string Get()
+        {
+            List<User> test = queryController.RetriveAll();
+            return test[0].ToString();
+        }
+
+        [HttpPost(Name = "AddKey")]
+        public string Post()
+        {
+            queryController.AddUser();
+            return "Woah";
+        }
     }
 
-    [HttpGet(Name = "GetCarInfo")]
-    public string Get()
-    {
-        return "Woah";
-    }
 }

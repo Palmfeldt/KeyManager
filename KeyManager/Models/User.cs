@@ -1,11 +1,23 @@
-﻿namespace KeyManager.Models
-{
-    public class User(string firstName, string lastName, int clientNumber, string keyIndentifier)
-    {
-        private string FirstName { get; set; } = firstName;
-        private string LastName { get; set; } = lastName;
-        private int ClientNumber { get; } = clientNumber;
+﻿using System.ComponentModel.DataAnnotations;
 
- 
+namespace KeyManager.Models
+{
+    public class User
+    {
+        [Key]
+        public int Id { get; set; }
+
+        [Required, MaxLength(50)]
+        public string FirstName { get; set; }
+
+        [Required, MaxLength(50)]
+        public string LastName { get; set; }
+
+        public long? SSN { get; set; }
+
+        public override string ToString()
+        {
+            return FirstName + " " + LastName;
+        }
     }
 }

@@ -1,10 +1,13 @@
-﻿namespace KeyManager.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace KeyManager.Models
 {
-    public class Key(string keyIndentifier)
+    public class Key
     {
-        // This is the key string
-        private string KeyIndentifier { get; set; } = keyIndentifier;
+        [Key]
+        public int Id { get; set; }
 
-
+        [Required, MaxLength(50)]
+        public string KeyIdentifier { get; set; }
     }
 }
