@@ -4,25 +4,26 @@ using KeyManager.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace KeyManager.Controllers
 {
 
     [ApiController]
     [Route("[controller]")]
-    public class KeyManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
+    public class UserManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private KeyQueryController queryController = new(options);
+        private UserQueryController queryController = new(options);
 
-        [HttpGet(Name = "GetAllKeys")]
-        public ActionResult<IEnumerable<Key>> Get()
+        [HttpGet(Name = "GetAllUsers")]
+        public ActionResult<IEnumerable<User>> Get()
         {
-            var keys = queryController.RetriveAll();
-            return Ok(keys);
+            var users = queryController.RetriveAll();
+            return Ok(users);
         }
 
-        [HttpGet("{id}", Name = "GetKeyById")]
+        [HttpGet("{id}", Name = "GetUserById")]
         public ActionResult<User> Get(int id)
         {
             var user = queryController.RetrieveById(id);
@@ -33,17 +34,17 @@ namespace KeyManager.Controllers
             return Ok(user);
         }
 
-        [HttpPost(Name = "AddKey")]
-        public IActionResult Post([FromBody] Key newUser)
+        [HttpPost(Name = "AddUser")]
+        public IActionResult Post([FromBody] User newUser)
         {
             queryController.Add(newUser);
             return CreatedAtRoute("GetUserById", new { id = newUser.Id }, newUser);
         }
 
         [HttpPut("{id}", Name = "UpdateUser")]
-        public IActionResult Put(int id, [FromBody] Key key)
+        public IActionResult Put(int id, [FromBody] User user)
         {
-            var success = queryController.Update(id, key);
+            var success = queryController.Update(id, user);
             if (!success)
             {
                 return NotFound("User not found or update failed");
@@ -54,7 +55,7 @@ namespace KeyManager.Controllers
         [HttpDelete("{id}", Name = "DeleteUser")]
         public IActionResult Delete(int id)
         {
-            var success = queryController.DeleteUser(id);
+            var success = queryController.Delete(id);
             if (!success)
             {
                 return NotFound("User not found");
