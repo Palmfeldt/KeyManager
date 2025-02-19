@@ -7,7 +7,7 @@ namespace KeyManager.Data
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Key> Keys { get; set; }
-        public DbSet<UserAddress> UserAddresses { get; set; }
+        public DbSet<Address> Addresses { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -17,12 +17,12 @@ namespace KeyManager.Data
                 .IsUnique();
 
             // Define Foreign Key Relationships
-            modelBuilder.Entity<UserAddress>()
+            modelBuilder.Entity<Address>()
                 .HasOne(ua => ua.User)
                 .WithMany()
                 .HasForeignKey(ua => ua.Id);
 
-            modelBuilder.Entity<UserAddress>()
+            modelBuilder.Entity<Address>()
                 .HasOne(ua => ua.Key)
                 .WithMany()
                 .HasForeignKey(ua => ua.Id);

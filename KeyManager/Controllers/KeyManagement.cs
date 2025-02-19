@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Controllers
 {
-
+    [Tags("Key")]
     [ApiController]
     [Route("[controller]")]
     public class KeyManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase

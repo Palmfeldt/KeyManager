@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace KeyManager.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250217151547_InitialCreate")]
+    [Migration("20250219072619_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -24,6 +24,28 @@ namespace KeyManager.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("KeyManager.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FullAddress")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("LeaseEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("LeaseStart")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
 
             modelBuilder.Entity("KeyManager.Models.Key", b =>
                 {
@@ -72,28 +94,7 @@ namespace KeyManager.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("KeyManager.Models.UserAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime?>("LeaseEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("LeaseStart")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserAddresses");
-                });
-
-            modelBuilder.Entity("KeyManager.Models.UserAddress", b =>
+            modelBuilder.Entity("KeyManager.Models.Address", b =>
                 {
                     b.HasOne("KeyManager.Models.Key", "Key")
                         .WithMany()

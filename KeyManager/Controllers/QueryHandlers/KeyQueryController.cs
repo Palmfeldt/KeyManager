@@ -14,11 +14,6 @@ namespace KeyManager.Controllers.QueryHandlers
             return [.. context.Keys];
         }
 
-        public bool AddDummy()
-        {
-            throw new NotImplementedException();
-        }
-
         public Key RetrieveById(int id)
         {
             Key key = context.Keys.Find(id);

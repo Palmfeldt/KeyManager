@@ -41,25 +41,25 @@ namespace KeyManager.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserAddresses",
+                name: "Addresses",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false),
                     LeaseStart = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     LeaseEnd = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    Address = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
+                    FullAddress = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserAddresses", x => x.Id);
+                    table.PrimaryKey("PK_Addresses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserAddresses_Keys_Id",
+                        name: "FK_Addresses_Keys_Id",
                         column: x => x.Id,
                         principalTable: "Keys",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_UserAddresses_Users_Id",
+                        name: "FK_Addresses_Users_Id",
                         column: x => x.Id,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -77,7 +77,7 @@ namespace KeyManager.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "UserAddresses");
+                name: "Addresses");
 
             migrationBuilder.DropTable(
                 name: "Keys");

@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace KeyManager.Models
 {
-    public class UserAddress
+    public class Address : IIdentifier
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -14,7 +14,7 @@ namespace KeyManager.Models
         public DateTime? LeaseEnd { get; set; }
 
         [MaxLength(50)]
-        public string Address { get; set; }
+        public string FullAddress { get; set; }
 
         [ForeignKey("Id")]
         public User User { get; set; }

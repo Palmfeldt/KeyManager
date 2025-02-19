@@ -22,6 +22,28 @@ namespace KeyManager.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("KeyManager.Models.Address", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    b.Property<string>("FullAddress")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<DateTime?>("LeaseEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("LeaseStart")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Addresses");
+                });
+
             modelBuilder.Entity("KeyManager.Models.Key", b =>
                 {
                     b.Property<int>("Id")
@@ -69,28 +91,7 @@ namespace KeyManager.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("KeyManager.Models.UserAddress", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime?>("LeaseEnd")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<DateTime>("LeaseStart")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("UserAddresses");
-                });
-
-            modelBuilder.Entity("KeyManager.Models.UserAddress", b =>
+            modelBuilder.Entity("KeyManager.Models.Address", b =>
                 {
                     b.HasOne("KeyManager.Models.Key", "Key")
                         .WithMany()

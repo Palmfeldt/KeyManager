@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace KeyManager.Controllers
 {
 
+    [Tags("User")]
     [ApiController]
     [Route("[controller]")]
     public class UserManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
@@ -16,7 +17,7 @@ namespace KeyManager.Controllers
         private UserQueryController queryController = new(options);
 
         /// <summary>
-        /// 
+        /// Get all the users
         /// </summary>
         /// <returns></returns>
         [HttpGet(Name = "GetAllUsers")]

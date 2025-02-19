@@ -14,14 +14,6 @@ namespace KeyManager.Controllers.QueryHandlers
             return [.. context.Users];
         }
 
-        public bool AddDummy()
-        {
-            var newUser = new User { FirstName = "John", LastName = "Doe", SSN = 123456789 };
-            context.Users.Add(newUser);
-            context.SaveChanges();
-            return true;
-        }
-
         public bool Delete(int id)
         {
             User user = new() { Id = id };
