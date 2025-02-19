@@ -8,12 +8,6 @@ namespace KeyManager.Controllers.QueryHandlers
     {
         private AppDbContext context = new(options);
 
-
-        public List<Key> RetriveAll()
-        {
-            return [.. context.Keys];
-        }
-
         public Key RetrieveById(int id)
         {
             Key key = context.Keys.Find(id);
@@ -24,14 +18,18 @@ namespace KeyManager.Controllers.QueryHandlers
             throw new KeyNotFoundException($"Key with ID {id} not found.");
         }
 
-        List<Key> IQueryController<Key>.RetriveAll()
+        public List<Key> RetriveAll()
         {
-            throw new NotImplementedException();
+            return [.. context.Keys];
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            Address adresses = new() { Id = id };
+            context.Addresses.Attach(adresses);
+            context.Addresses.Remove(adresses);
+            context.SaveChanges();
+            return true;
         }
 
         public bool Add(Key key)
@@ -70,10 +68,11 @@ namespace KeyManager.Controllers.QueryHandlers
             return key;
         }
 
-        public bool Update(int id, Key obj)
+        public bool Update(Key obj)
         {
-            throw new NotImplementedException();
+            context.Keys.Update(obj);
+            context.SaveChanges();
+            return true;
         }
-
     }
 }

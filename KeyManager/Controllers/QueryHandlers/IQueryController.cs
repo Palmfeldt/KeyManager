@@ -9,7 +9,7 @@ namespace KeyManager.Controllers.QueryHandlers
 
         public bool Add(T obj);
 
-        public bool Update(int id, T obj);
+        public bool Update(T obj);
 
         // Search Strict
         public T RetrieveById(int id);

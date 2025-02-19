@@ -20,12 +20,14 @@ namespace KeyManager.Data
             modelBuilder.Entity<Address>()
                 .HasOne(ua => ua.User)
                 .WithMany()
-                .HasForeignKey(ua => ua.Id);
+                .HasForeignKey(ua => ua.Id)
+                .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Address>()
                 .HasOne(ua => ua.Key)
                 .WithMany()
-                .HasForeignKey(ua => ua.Id);
+                .HasForeignKey(ua => ua.Id)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

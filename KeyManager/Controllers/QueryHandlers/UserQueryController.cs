@@ -30,9 +30,11 @@ namespace KeyManager.Controllers.QueryHandlers
             return true;
         }
 
-        public bool Update(int id, User obj)
+        public bool Update(User obj)
         {
-            throw new NotImplementedException();
+            context.Users.Update(obj);
+            context.SaveChanges();
+            return true;
         }
 
         public List<User> Search(long ssn)

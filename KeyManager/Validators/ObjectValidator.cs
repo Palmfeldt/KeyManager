@@ -7,11 +7,6 @@ namespace KeyManager.Validators
     {
         public bool CheckId<T>(T obj) where T : class, IIdentifier
         {
-            if (obj is null)
-            {
-                return false;
-            }
-
             if (obj.Id == 0)
             {
                 return false;

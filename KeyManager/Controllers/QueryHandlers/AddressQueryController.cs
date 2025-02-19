@@ -14,7 +14,8 @@ namespace KeyManager.Controllers.QueryHandlers
 
         public List<Address> RetriveAll()
         {
-            return [.. context.Addresses];
+            return context.Addresses.Include(x => x.Key)
+                .Include(x => x.User).ToList();
         }
 
         public bool Delete(int id)
@@ -28,26 +29,20 @@ namespace KeyManager.Controllers.QueryHandlers
 
         public bool Add(Address obj)
         {
-            ObjectValidator validator = new();
-
-            // Check if id of user is not equal to 0
-            if (!validator.CheckId(obj.User))
-            {
-                obj.User = context.Users.Find(obj.User.Id);
-            }
-
-            if (!validator.CheckId(obj.Key))
-            {
-                obj.Key = context.Keys.Find(obj.Key.Id);
-            }
-
             context.Addresses.Add(obj);
             context.SaveChanges();
             return true;
         }
-        public bool Update(int id, Address obj)
+        public bool Update(Address obj)
         {
-            throw new NotImplementedException();
+            var address = context.Addresses.Find(obj.Id);
+            if (address is null)
+            {
+                throw new KeyNotFoundException($"Address with ID {obj.Id} not found.");
+            }
+            context.Addresses.Update(address);
+            context.SaveChanges();
+            return true;
         }
 
         // May be to specific
@@ -65,6 +60,9 @@ namespace KeyManager.Controllers.QueryHandlers
         public Address RetrieveById(int id)
         {
             var address = context.Addresses.Find(id);
+            context.Entry(address).Reference(x => x.User).Load();
+            context.Entry(address).Reference(x => x.Key).Load();
+
             if (address is null)
             {
                 throw new KeyNotFoundException($"Address with ID {id} not found.");
