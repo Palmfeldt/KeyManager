@@ -1,6 +1,6 @@
-using KeyManager.Controllers.QueryHandlers;
 using KeyManager.Data;
 using KeyManager.Models;
+using KeyManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

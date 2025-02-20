@@ -5,12 +5,23 @@ using KeyManager.Validators;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace KeyManager.Controllers.QueryHandlers
+namespace KeyManager.Repositories
 {
     public class AddressQueryController(DbContextOptions<AppDbContext> options) : IQueryController<Address>
     {
         private AppDbContext context = new(options);
+        public Address RetrieveById(int id)
+        {
+            var address = context.Addresses.Find(id);
+            context.Entry(address).Reference(x => x.User).Load();
+            context.Entry(address).Reference(x => x.Key).Load();
 
+            if (address is null)
+            {
+                throw new KeyNotFoundException($"Address with ID {id} not found.");
+            }
+            return address;
+        }
 
         public List<Address> RetriveAll()
         {
@@ -47,7 +58,7 @@ namespace KeyManager.Controllers.QueryHandlers
         }
 
         // May be to specific
-        public List<Address> Search(String address)
+        public List<Address> Search(string address)
         {
             var fetchedAddress = context.Addresses.Where(u => u.FullAddress == address).ToList();
 
@@ -58,17 +69,6 @@ namespace KeyManager.Controllers.QueryHandlers
             return fetchedAddress;
         }
 
-        public Address RetrieveById(int id)
-        {
-            var address = context.Addresses.Find(id);
-            context.Entry(address).Reference(x => x.User).Load();
-            context.Entry(address).Reference(x => x.Key).Load();
 
-            if (address is null)
-            {
-                throw new KeyNotFoundException($"Address with ID {id} not found.");
-            }
-            return address;
-        }
     }
 }

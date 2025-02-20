@@ -3,13 +3,11 @@ using KeyManager.ExceptionHandler;
 using KeyManager.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeyManager.Controllers.QueryHandlers
+namespace KeyManager.Repositories
 {
-    public class UserQueryController(DbContextOptions<AppDbContext> options) : GenericQueryController<Key, AppDbContext>
+    public class UserQueryController(DbContextOptions<AppDbContext> options) : IQueryController<User>
     {
         private AppDbContext context = new(options);
-
-        public KeyQueryController(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public List<User> RetriveAll()
         {

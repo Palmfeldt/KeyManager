@@ -3,7 +3,7 @@ using KeyManager.ExceptionHandler;
 using KeyManager.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeyManager.Controllers.QueryHandlers
+namespace KeyManager.Repositories
 {
     public class KeyQueryController(DbContextOptions<AppDbContext> options) : IQueryController<Key>
     {

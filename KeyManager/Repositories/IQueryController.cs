@@ -1,5 +1,4 @@
-﻿
-namespace KeyManager.Controllers.QueryHandlers
+﻿namespace KeyManager.Repositories
 {
     public interface IQueryController<T>
     {
