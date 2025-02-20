@@ -1,4 +1,5 @@
 ﻿using KeyManager.Data;
+using KeyManager.ExceptionHandler;
 using KeyManager.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +26,11 @@ namespace KeyManager.Controllers.QueryHandlers
 
         public bool Delete(int id)
         {
+            // Check if key is used in any address
+            if (context.Addresses.Any(a => a.Key.Id == id))
+            {
+                throw new KeyInUseException($"Key with ID {id} is in use.");
+            }
             Address adresses = new() { Id = id };
             context.Addresses.Attach(adresses);
             context.Addresses.Remove(adresses);
@@ -68,9 +74,15 @@ namespace KeyManager.Controllers.QueryHandlers
             return key;
         }
 
-        public bool Update(Key obj)
+        public bool Update(int id, Key obj)
         {
-            context.Keys.Update(obj);
+            obj.Id = id;
+            var key = context.Users.Find(obj.Id);
+            if (key is null)
+            {
+                throw new KeyNotFoundException($"Key with ID {obj.Id} not found.");
+            }
+            context.Users.Update(key);
             context.SaveChanges();
             return true;
         }

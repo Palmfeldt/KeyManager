@@ -19,7 +19,6 @@ namespace KeyManager.Controllers
         /// Get all the addresses with their keys
         /// </summary>
         /// <returns></returns>
-      
         [HttpGet(Name = "GetAllAddresses")]
         public ActionResult<IEnumerable<Address>> Get()
         {

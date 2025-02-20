@@ -33,8 +33,9 @@ namespace KeyManager.Controllers.QueryHandlers
             context.SaveChanges();
             return true;
         }
-        public bool Update(Address obj)
+        public bool Update(int id, Address obj)
         {
+            obj.Id = id;
             var address = context.Addresses.Find(obj.Id);
             if (address is null)
             {
@@ -69,7 +70,5 @@ namespace KeyManager.Controllers.QueryHandlers
             }
             return address;
         }
-
-   
     }
 }
