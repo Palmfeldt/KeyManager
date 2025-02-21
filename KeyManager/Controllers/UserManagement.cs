@@ -1,12 +1,11 @@
 using KeyManager.Data;
 using KeyManager.Models;
-using KeyManager.QueryHandlers;
+using KeyManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Controllers
 {
-
     [Tags("User")]
     [ApiController]
     [Route("[controller]")]
@@ -14,7 +13,7 @@ namespace KeyManager.Controllers
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private UserQueryController queryController = new(options);
+        private UserRepository queryController = new(options);
 
         /// <summary>
         /// Get all the users

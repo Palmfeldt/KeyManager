@@ -1,6 +1,6 @@
 using KeyManager.Data;
 using KeyManager.Models;
-using KeyManager.QueryHandlers;
+using KeyManager.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,7 +13,7 @@ namespace KeyManager.Controllers
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private KeyQueryController queryController = new(options);
+        private KeyRepository queryController = new(options);
 
         [HttpGet(Name = "GetAllKeys")]
         public ActionResult<IEnumerable<Key>> Get()

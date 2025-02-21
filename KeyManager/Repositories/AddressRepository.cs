@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace KeyManager.Repositories
 {
-    public class AddressQueryController(DbContextOptions<AppDbContext> options) : IQueryController<Address>
+    public class AddressRepository(DbContextOptions<AppDbContext> options) : IGenericRepository<Address>
     {
         private AppDbContext context = new(options);
         public Address RetrieveById(int id)

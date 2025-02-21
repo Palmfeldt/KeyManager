@@ -1,6 +1,6 @@
 ﻿namespace KeyManager.Repositories
 {
-    public interface IQueryController<T>
+    public interface IGenericRepository<T>
     {
         public List<T> RetriveAll();
 

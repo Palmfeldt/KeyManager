@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Repositories
 {
-    public class KeyQueryController(DbContextOptions<AppDbContext> options) : IQueryController<Key>
+    public class KeyRepository(DbContextOptions<AppDbContext> options) : IGenericRepository<Key>
     {
         private AppDbContext context = new(options);
 

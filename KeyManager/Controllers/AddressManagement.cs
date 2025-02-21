@@ -13,7 +13,7 @@ namespace KeyManager.Controllers
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private AddressQueryController queryController = new(options);
+        private AddressRepository queryController = new(options);
 
         /// <summary>
         /// Get all the addresses with their keys
