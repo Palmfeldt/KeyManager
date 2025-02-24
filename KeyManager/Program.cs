@@ -1,4 +1,5 @@
 //using AutoMapper;
+using System.Reflection;
 using KeyManager.Application;
 using KeyManager.Domain.Models;
 using KeyManager.Persistence.Data;
@@ -12,6 +13,7 @@ using Microsoft.EntityFrameworkCore;
 //IMapper mapper = config.CreateMapper();
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddUserSecrets(Assembly.GetEntryAssembly()!);
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
