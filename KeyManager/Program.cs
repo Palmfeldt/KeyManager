@@ -1,5 +1,8 @@
-using AutoMapper;
-using KeyManager.Data;
+//using AutoMapper;
+using KeyManager.Application;
+using KeyManager.Domain.Models;
+using KeyManager.Persistence.Data;
+using KeyManager.Persistence.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 //var config = new MapperConfiguration(cfg => {
@@ -13,6 +16,9 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IRepository<Address>, AddressRepository>();
+builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IRepository<Key>, KeyRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

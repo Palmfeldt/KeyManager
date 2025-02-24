@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
-namespace KeyManager.Models
+namespace KeyManager.Domain.Models
 {
-    public class Address : IIdentifier
+    public class Address
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

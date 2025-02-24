@@ -1,7 +1,7 @@
-﻿using KeyManager.Models;
+﻿using KeyManager.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace KeyManager.Data
+namespace KeyManager.Persistence.Data
 {
     public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
     {

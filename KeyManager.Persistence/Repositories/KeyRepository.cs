@@ -1,11 +1,12 @@
-﻿using KeyManager.Data;
-using KeyManager.ExceptionHandler;
-using KeyManager.Models;
+﻿using KeyManager.ExceptionHandler;
+using KeyManager.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using KeyManager.Persistence.Data;
+using KeyManager.Application;
 
-namespace KeyManager.Repositories
+namespace KeyManager.Persistence.Repositories
 {
-    public class KeyRepository(DbContextOptions<AppDbContext> options) : IGenericRepository<Key>
+    public class KeyRepository(DbContextOptions<AppDbContext> options) : IRepository<Key>
     {
         private AppDbContext context = new(options);
 
@@ -31,9 +32,9 @@ namespace KeyManager.Repositories
             {
                 throw new KeyInUseException($"Key with ID {id} is in use.");
             }
-            Address adresses = new() { Id = id };
-            context.Addresses.Attach(adresses);
-            context.Addresses.Remove(adresses);
+            Key key = new() { Id = id };
+            context.Keys.Attach(key);
+            context.Keys.Remove(key);
             context.SaveChanges();
             return true;
         }

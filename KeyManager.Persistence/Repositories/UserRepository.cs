@@ -1,11 +1,12 @@
-﻿using KeyManager.Data;
-using KeyManager.ExceptionHandler;
-using KeyManager.Models;
+﻿using KeyManager.ExceptionHandler;
+using KeyManager.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using KeyManager.Persistence.Data;
+using KeyManager.Application;
 
-namespace KeyManager.Repositories
+namespace KeyManager.Persistence.Repositories
 {
-    public class UserRepository(DbContextOptions<AppDbContext> options) : IGenericRepository<User>
+    public class UserRepository(DbContextOptions<AppDbContext> options) : IRepository<User>
     {
         private AppDbContext context = new(options);
 

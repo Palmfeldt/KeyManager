@@ -1,6 +1,5 @@
-using KeyManager.Data;
-using KeyManager.Models;
-using KeyManager.Repositories;
+using KeyManager.Application;
+using KeyManager.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,11 +8,11 @@ namespace KeyManager.Controllers
     [Tags("User")]
     [ApiController]
     [Route("[controller]")]
-    public class UserManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
+    public class UserManagement(ILogger<KeyManagement> logger, IRepository<User> userRepository) : ControllerBase
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private UserRepository queryController = new(options);
+        private IRepository<User> queryController = userRepository;
 
         /// <summary>
         /// Get all the users

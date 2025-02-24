@@ -1,6 +1,6 @@
-﻿namespace KeyManager.Repositories
+﻿namespace KeyManager.Application
 {
-    public interface IGenericRepository<T>
+    public interface IRepository<T>
     {
         public List<T> RetriveAll();
 

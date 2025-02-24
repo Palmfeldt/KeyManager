@@ -1,13 +1,11 @@
-﻿using System.Net;
-using KeyManager.Data;
-using KeyManager.Models;
-using KeyManager.Validators;
+﻿using KeyManager.Persistence.Data;
+using KeyManager.Domain.Models;
+using KeyManager.Application;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
-namespace KeyManager.Repositories
+namespace KeyManager.Persistence.Repositories
 {
-    public class AddressRepository(DbContextOptions<AppDbContext> options) : IGenericRepository<Address>
+    public class AddressRepository(DbContextOptions<AppDbContext> options) : IRepository<Address>
     {
         private AppDbContext context = new(options);
         public Address RetrieveById(int id)

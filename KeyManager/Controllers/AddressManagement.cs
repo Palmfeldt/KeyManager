@@ -1,19 +1,17 @@
-using KeyManager.Data;
-using KeyManager.Models;
-using KeyManager.Repositories;
+using KeyManager.Application;
+using KeyManager.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Controllers
 {
     [Tags("Address")]
     [ApiController]
     [Route("[controller]")]
-    public class AddressManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
+    public class AddressManagement(ILogger<KeyManagement> logger, IRepository<Address> addressRepository) : ControllerBase
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private AddressRepository queryController = new(options);
+        private IRepository<Address> queryController = addressRepository;
 
         /// <summary>
         /// Get all the addresses with their keys

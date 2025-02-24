@@ -4,9 +4,11 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b991059a-53ac-4e98-94a5-f48ddc2defb4</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="14.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.2">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -17,7 +19,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
+    <ProjectReference Include="..\KeyManager.Application\KeyManager.Application.csproj" />
+    <ProjectReference Include="..\KeyManager.Domain\KeyManager.Domain.csproj" />
+    <ProjectReference Include="..\KeyManager.Persistence\KeyManager.Persistence.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,19 +1,17 @@
-using KeyManager.Data;
-using KeyManager.Models;
-using KeyManager.Repositories;
+using KeyManager.Application;
+using KeyManager.Domain.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Controllers
 {
     [Tags("Key")]
     [ApiController]
     [Route("[controller]")]
-    public class KeyManagement(ILogger<KeyManagement> logger, DbContextOptions<AppDbContext> options) : ControllerBase
+    public class KeyManagement(ILogger<KeyManagement> logger, IRepository<Key> keyRepository) : ControllerBase
     {
 
         private readonly ILogger<KeyManagement> _logger = logger;
-        private KeyRepository queryController = new(options);
+        private IRepository<Key> queryController = keyRepository;
 
         [HttpGet(Name = "GetAllKeys")]
         public ActionResult<IEnumerable<Key>> Get()
