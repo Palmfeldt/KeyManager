@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.13.35806.99
+# Visual Studio Version 18
+VisualStudioVersion = 18.1.11304.174 d18.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyManager", "KeyManager\KeyManager.csproj", "{BB5CEC86-E04A-464F-AD23-4DD926F3ABDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests", "Tests\Tests.csproj", "{F792D6D3-8311-404C-8F30-1D59AF468E46}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyManager.Tests", "Tests\KeyManager.Tests.csproj", "{F792D6D3-8311-404C-8F30-1D59AF468E46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeyManager.Application", "KeyManager.Application\KeyManager.Application.csproj", "{4FAD8DB9-D9D5-4838-B7A7-FD6C1435F1AF}"
 EndProject

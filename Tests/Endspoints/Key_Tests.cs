@@ -1,9 +1,8 @@
-﻿
-using KeyManager.Models;
-using System.Net.Mime;
-using System.Text.Json;
+﻿using System.Net.Mime;
 using System.Text;
-namespace Tests.Endspoints
+using System.Text.Json;
+using KeyManager.Domain.Models;
+namespace KeyManager.Tests.Endspoints
 {
     [TestClass]
     public sealed class Key_Tests : EndpointClientHandler

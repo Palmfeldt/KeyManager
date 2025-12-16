@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 
-namespace Tests.Endspoints
+namespace KeyManager.Tests.Endspoints
 {
     public class EndpointClientHandler
     {

@@ -1,16 +1,11 @@
-//using AutoMapper;
 using System.Reflection;
 using KeyManager.Application;
 using KeyManager.Domain.Models;
+using KeyManager.HealthCheck;
 using KeyManager.Persistence.Data;
 using KeyManager.Persistence.Repositories;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
-
-//var config = new MapperConfiguration(cfg => {
-//    cfg.AddProfile<MappingProfile>();
-//});
-
-//IMapper mapper = config.CreateMapper();
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddUserSecrets(Assembly.GetEntryAssembly()!);
@@ -21,6 +16,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IRepository<Address>, AddressRepository>();
 builder.Services.AddScoped<IRepository<User>, UserRepository>();
 builder.Services.AddScoped<IRepository<Key>, KeyRepository>();
+
+builder.Services.AddHealthChecks();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -41,7 +38,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.MapHealthChecks("/health", new HealthCheckOptions
+{
+    ResultStatusCodes = HealthCheckMappings.ResultStatusCodes
+});
+
+app.UseExceptionHandler();
+
 app.MapControllers();
 
 app.Run();
-public partial class Program { }
