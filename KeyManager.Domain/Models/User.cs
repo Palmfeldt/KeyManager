@@ -22,4 +22,8 @@ public class User
     /// </summary>
     public long? Pnum { get; set; }
 
+    /// <summary>
+    /// Gets or sets the email address associated with the user.
+    /// </summary>
+    public string? Email { get; set; }
 }

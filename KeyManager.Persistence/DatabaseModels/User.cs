@@ -17,8 +17,5 @@ public class User
 
     public long? Pnum { get; set; }
 
-    public override string ToString()
-    {
-        return FirstName + " " + LastName;
-    }
+    public string? Email { get; set; }
 }

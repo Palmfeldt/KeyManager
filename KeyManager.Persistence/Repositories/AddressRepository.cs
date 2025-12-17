@@ -15,16 +15,14 @@ public class AddressRepository(DbContextOptions<AppDbContext> options) : IReposi
         context.Entry(address).Reference(x => x.Key).Load();
 
         if (address is null)
-        {
             throw new KeyNotFoundException($"Address with ID {id} not found.");
-        }
+
         return address;
     }
 
     public List<Address> RetriveAll()
     {
-        return context.Addresses.Include(x => x.Key)
-            .Include(x => x.User).ToList();
+        return [.. context.Addresses.Include(x => x.Key).Include(x => x.User)];
     }
 
     public bool Delete(int id)
@@ -45,11 +43,7 @@ public class AddressRepository(DbContextOptions<AppDbContext> options) : IReposi
     public bool Update(int id, Address obj)
     {
         obj.Id = id;
-        var address = context.Addresses.Find(obj.Id);
-        if (address is null)
-        {
-            throw new KeyNotFoundException($"Address with ID {obj.Id} not found.");
-        }
+        var address = context.Addresses.Find(obj.Id) ?? throw new KeyNotFoundException($"Address with ID {obj.Id} not found.");
         context.Addresses.Update(address);
         context.SaveChanges();
         return true;
@@ -60,12 +54,9 @@ public class AddressRepository(DbContextOptions<AppDbContext> options) : IReposi
     {
         var fetchedAddress = context.Addresses.Where(u => u.FullAddress == address).ToList();
 
-        if (!fetchedAddress.Any())
-        {
+        if (fetchedAddress.Count == 0)
             throw new KeyNotFoundException($"Address {address} not found.");
-        }
+
         return fetchedAddress;
     }
-
-
 }

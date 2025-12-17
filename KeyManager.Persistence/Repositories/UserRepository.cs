@@ -23,10 +23,9 @@ public class UserRepository(DbContextOptions<AppDbContext> options) : IRepositor
 
     public bool Delete(int id)
     {
-        if (context.Addresses.Any(a => a.User.Id == id))
-        {
+        if (context.Addresses.Any(a => a.User!.Id == id))
             throw new KeyInUseException($"Key with ID {id} is in use.");
-        }
+
         User user = new() { Id = id, FirstName = "Test", LastName = "Testsson" };
         context.Users.Attach(user);
         context.Users.Remove(user);
@@ -50,14 +49,13 @@ public class UserRepository(DbContextOptions<AppDbContext> options) : IRepositor
         return true;
     }
 
-    public List<User> Search(long ssn)
+    public List<User> Search(long pnum)
     {
-        var users = context.Users.Where(u => u.Pnum == ssn).ToList();
+        var users = context.Users.Where(u => u.Pnum == pnum).ToList();
 
         if (users.Count == 0)
-            throw new KeyNotFoundException($"User with SSN {ssn} not found.");
+            throw new KeyNotFoundException($"User with Pnum {pnum} not found.");
 
         return users;
     }
-
 }

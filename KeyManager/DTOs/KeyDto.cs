@@ -1,9 +1,8 @@
-﻿namespace KeyManager.DTOs
-{
-    public class KeyDto
-    {
-        public int Id { get; set; }
-        public required string KeyIdentifier { get; set; }
+﻿namespace KeyManager.DTOs;
 
-    }
+public record KeyDto
+{
+    public int Id { get; set; }
+    public string? KeyIdentifier { get; set; }
+
 }
