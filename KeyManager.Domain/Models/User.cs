@@ -1,25 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿namespace KeyManager.Domain.Models;
 
-namespace KeyManager.Domain.Models
+public class User
 {
-    public class User
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+    /// <summary>
+    /// The unique identifier for the user.
+    /// </summary>
+    public required int Id { get; set; }
 
-        [Required, MaxLength(50)]
-        public string FirstName { get; set; }
+    /// <summary>
+    /// The first name of the user.
+    /// </summary>
+    public required string FirstName { get; set; }
 
-        [Required, MaxLength(50)]
-        public string LastName { get; set; }
+    /// <summary>
+    /// The last name of the user.
+    /// </summary>
+    public required string LastName { get; set; }
 
-        public long? SSN { get; set; }
+    /// <summary>
+    /// The Personal number of the user.
+    /// </summary>
+    public long? Pnum { get; set; }
 
-        public override string ToString()
-        {
-            return FirstName + " " + LastName;
-        }
-    }
 }

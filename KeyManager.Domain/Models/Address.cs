@@ -1,26 +1,38 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿namespace KeyManager.Domain.Models;
 
-namespace KeyManager.Domain.Models
+public class Address
 {
-    public class Address
-    {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+    /// <summary>
+    /// The unique identifier for the address.
+    /// </summary>
+    public required int Id { get; set; }
 
-        public DateTime LeaseStart { get; set; }
+    /// <summary>
+    /// The start date and time of the lease period.
+    /// </summary>
+    public DateTime LeaseStart { get; set; }
 
-        public DateTime? LeaseEnd { get; set; }
+    /// <summary>
+    /// The end date of the lease period. Nullable if the lease is ongoing.
+    /// </summary>
+    public DateTime? LeaseEnd { get; set; }
 
-        [MaxLength(50)]
-        public string FullAddress { get; set; }
+    /// <summary>
+    /// The full address of the property.
+    /// </summary>
+    public required string FullAddress { get; set; }
 
-        [ForeignKey("Id")]
-        public User User { get; set; }
+    /// <summary>
+    /// The user associated with this address.
+    /// </summary>
+    public User? User { get; set; }
 
-        [ForeignKey("Id")]
-        public Key Key { get; set; }
-    }
-    
+    /// <summary>
+    /// Gets or sets the key associated with the current object.
+    /// </summary>
+    /// <remarks>
+    /// Note that this is supposed to be a phyiscal door key associated with the address.
+    /// </remarks>
+    public Key? Key { get; set; }
 }
+

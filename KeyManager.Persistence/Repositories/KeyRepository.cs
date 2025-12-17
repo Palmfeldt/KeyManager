@@ -1,91 +1,92 @@
 ﻿using KeyManager.ExceptionHandler;
-using KeyManager.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using KeyManager.Persistence.Data;
 using KeyManager.Application;
+using KeyManager.Persistence.DatabaseModels;
 
-namespace KeyManager.Persistence.Repositories
+namespace KeyManager.Persistence.Repositories;
+
+public class KeyRepository(DbContextOptions<AppDbContext> options) : IRepository<Key>
 {
-    public class KeyRepository(DbContextOptions<AppDbContext> options) : IRepository<Key>
+    private readonly AppDbContext context = new(options);
+
+    public Key RetrieveById(int id)
     {
-        private AppDbContext context = new(options);
-
-        public Key RetrieveById(int id)
+        Key key = context.Keys.Find(id);
+        if (key is not null)
         {
-            Key key = context.Keys.Find(id);
-            if (key is not null)
-            {
-                return key;
-            }
-            throw new KeyNotFoundException($"Key with ID {id} not found.");
-        }
-
-        public List<Key> RetriveAll()
-        {
-            return [.. context.Keys];
-        }
-
-        public bool Delete(int id)
-        {
-            // Check if key is used in any address
-            if (context.Addresses.Any(a => a.Key.Id == id))
-            {
-                throw new KeyInUseException($"Key with ID {id} is in use.");
-            }
-            Key key = new() { Id = id };
-            context.Keys.Attach(key);
-            context.Keys.Remove(key);
-            context.SaveChanges();
-            return true;
-        }
-
-        public bool Add(Key key)
-        {
-            context.Keys.Add(key);
-            context.SaveChanges();
-            return true;
-        }
-
-        public List<Key> Search(string input)
-        {
-            var keys = context.Keys.Where(u => u.KeyIdentifier == input).ToList();
-
-            if (!keys.Any())
-            {
-                throw new KeyNotFoundException($"Key was not found.");
-            }
-            return keys;
-
-        }
-
-        /// <summary>
-        /// Search with id
-        /// </summary>
-        /// <param name="id">Table id</param>
-        /// <returns></returns>
-        /// <exception cref="KeyNotFoundException"></exception>
-        public Key Search(int id)
-        {
-            Key key = context.Keys.Find(id);
-
-            if (key is null)
-            {
-                throw new KeyNotFoundException($"Key with ID {id} not found.");
-            }
             return key;
         }
+        throw new KeyNotFoundException($"Key with ID {id} not found.");
+    }
 
-        public bool Update(int id, Key obj)
+    public List<Key> RetriveAll()
+    {
+        return [.. context.Keys];
+    }
+
+    public bool Delete(int id)
+    {
+        // Check if key is used in any address
+        if (context.Addresses.Any(a => a.Key.Id == id))
         {
-            obj.Id = id;
-            var key = context.Users.Find(obj.Id);
-            if (key is null)
-            {
-                throw new KeyNotFoundException($"Key with ID {obj.Id} not found.");
-            }
-            context.Users.Update(key);
-            context.SaveChanges();
-            return true;
+            throw new KeyInUseException($"Key with ID {id} is in use.");
         }
+
+        Key key = context.Keys.Find(id);
+
+        context.Keys.Attach(key);
+        context.Keys.Remove(key);
+        context.SaveChanges();
+        return true;
+    }
+
+    public bool Add(Key key)
+    {
+        context.Keys.Add(key);
+        context.SaveChanges();
+        return true;
+    }
+
+    public List<Key> Search(string input)
+    {
+        var keys = context.Keys.Where(u => u.KeyIdentifier == input).ToList();
+
+        if (!keys.Any())
+        {
+            throw new KeyNotFoundException($"Key was not found.");
+        }
+        return keys;
+
+    }
+
+    /// <summary>
+    /// Search with id
+    /// </summary>
+    /// <param name="id">Table id</param>
+    /// <returns></returns>
+    /// <exception cref="KeyNotFoundException"></exception>
+    public Key Search(int id)
+    {
+        Key key = context.Keys.Find(id);
+
+        if (key is null)
+        {
+            throw new KeyNotFoundException($"Key with ID {id} not found.");
+        }
+        return key;
+    }
+
+    public bool Update(int id, Key obj)
+    {
+        obj.Id = id;
+        var key = context.Users.Find(obj.Id);
+        if (key is null)
+        {
+            throw new KeyNotFoundException($"Key with ID {obj.Id} not found.");
+        }
+        context.Users.Update(key);
+        context.SaveChanges();
+        return true;
     }
 }

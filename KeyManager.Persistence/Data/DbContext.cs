@@ -1,4 +1,4 @@
-﻿using KeyManager.Domain.Models;
+﻿using KeyManager.Persistence.DatabaseModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Persistence.Data

@@ -1,8 +1,8 @@
 using System.Reflection;
 using KeyManager.Application;
-using KeyManager.Domain.Models;
 using KeyManager.HealthCheck;
 using KeyManager.Persistence.Data;
+using KeyManager.Persistence.DatabaseModels;
 using KeyManager.Persistence.Repositories;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.EntityFrameworkCore;
