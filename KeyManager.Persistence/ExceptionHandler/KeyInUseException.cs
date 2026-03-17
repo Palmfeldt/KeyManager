@@ -1,18 +1,17 @@
-﻿namespace KeyManager.ExceptionHandler
+﻿namespace KeyManager.Persistence.ExceptionHandler;
+
+[Serializable]
+internal class KeyInUseException : Exception
 {
-    [Serializable]
-    internal class KeyInUseException : Exception
+    public KeyInUseException()
     {
-        public KeyInUseException()
-        {
-        }
+    }
 
-        public KeyInUseException(string? message) : base(message)
-        {
-        }
+    public KeyInUseException(string? message) : base(message)
+    {
+    }
 
-        public KeyInUseException(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
+    public KeyInUseException(string? message, Exception? innerException) : base(message, innerException)
+    {
     }
 }

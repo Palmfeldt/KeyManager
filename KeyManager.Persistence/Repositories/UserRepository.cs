@@ -1,7 +1,7 @@
 ﻿using KeyManager.Application;
-using KeyManager.ExceptionHandler;
+using KeyManager.Domain.Models;
 using KeyManager.Persistence.Data;
-using KeyManager.Persistence.DatabaseModels;
+using KeyManager.Persistence.ExceptionHandler;
 using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Persistence.Repositories;

@@ -1,7 +1,11 @@
 using KeyManager.Application;
 using KeyManager.Domain.Models;
+using KeyManager.DtoExamples;
+using KeyManager.Dtos;
+using KeyManager.Mappers;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace KeyManager.Controllers;
 
@@ -53,9 +57,10 @@ public class AddressManagement(
             Summary = "Add an address",
             Description = "Adds a new address."
         )]
-    public IActionResult Post([FromBody] Address newAddress)
+    [SwaggerRequestExample(typeof(AddressDto), typeof(CreateAddressExample))]
+    public IActionResult Post([FromBody] AddressDto newAddress)
     {
-        queryController.Add(newAddress);
+        queryController.Add(newAddress.ToModel());
         _logger.LogInformation($"Address with id {newAddress.Id} was created");
 
         return CreatedAtRoute("GetAddressById", new { id = newAddress.Id }, newAddress);
@@ -66,9 +71,9 @@ public class AddressManagement(
         Summary = "Modify an address",
         Description = "Modifies an address"
     )]
-    public IActionResult Put(int id, [FromBody] Address address)
+    public IActionResult Put(int id, [FromBody] AddressDto address)
     {
-        var success = queryController.Update(id, address);
+        var success = queryController.Update(id, address.ToModel());
         _logger.LogInformation($"Address with id {id} was updated");
         if (!success)
             return NotFound("Address not found or update failed");

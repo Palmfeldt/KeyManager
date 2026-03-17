@@ -1,5 +1,7 @@
 using KeyManager.Application;
 using KeyManager.Domain.Models;
+using KeyManager.Dtos;
+using KeyManager.Mappers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace KeyManager.Controllers;
@@ -35,16 +37,16 @@ public class UserManagement(ILogger<KeyManagement> logger, IRepository<User> use
     }
 
     [HttpPost(Name = "AddUser")]
-    public IActionResult Post([FromBody] User newUser)
+    public IActionResult Post([FromBody] UserDto newUser)
     {
-        queryController.Add(newUser);
+        queryController.Add(newUser.ToModel());
         return CreatedAtRoute("GetUserById", new { id = newUser.Id }, newUser);
     }
 
     [HttpPut("{id}", Name = "UpdateUser")]
-    public IActionResult Put(int id, [FromBody] User user)
+    public IActionResult Put(int id, [FromBody] UserDto user)
     {
-        var success = queryController.Update(id, user);
+        var success = queryController.Update(id, user.ToModel());
         if (!success)
             return NotFound("User not found or update failed");
 
