@@ -6,7 +6,7 @@ namespace KeyManager.Persistence.Data;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {
-    public DbSet<Resident> Users { get; set; }
+    public DbSet<Resident> Residents { get; set; }
     public DbSet<Key> Keys { get; set; }
     public DbSet<Property> Properties { get; set; }
 

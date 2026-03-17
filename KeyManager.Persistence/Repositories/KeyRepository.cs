@@ -27,11 +27,17 @@ public class KeyRepository(DbContextOptions<AppDbContext> options) : IRepository
 
     public bool Delete(int id)
     {
-        // Check if key is used in any address
-        if (context.Addresses.Any(a => a.Key!.Id == id))
-            throw new KeyInUseException($"Key with ID {id} is in use.");
+
+
 
         Key key = context.Keys.Find(id);
+
+        if (key is null)
+            return false;
+
+        // Check if key is used in any property
+        if (key.Property is not null)
+            throw new KeyInUseException($"Key with ID {id} is in use.");
 
         context.Keys.Attach(key);
         context.Keys.Remove(key);
@@ -73,8 +79,8 @@ public class KeyRepository(DbContextOptions<AppDbContext> options) : IRepository
     public bool Update(int id, Key obj)
     {
         obj.Id = id;
-        var key = context.Users.Find(obj.Id) ?? throw new KeyNotFoundException($"Key with ID {obj.Id} not found.");
-        context.Users.Update(key);
+        var key = context.Residents.Find(obj.Id) ?? throw new KeyNotFoundException($"Key with ID {obj.Id} not found.");
+        context.Residents.Update(key);
         context.SaveChanges();
         return true;
     }

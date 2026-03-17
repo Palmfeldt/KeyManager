@@ -2,6 +2,7 @@
 using System.Text;
 using System.Text.Json;
 using KeyManager.Domain.Models;
+using KeyManager.Domain.Models.KeyAttribures;
 namespace KeyManager.Tests.Endspoints;
 
 [TestClass]
@@ -13,7 +14,10 @@ public sealed class Key_Tests : EndpointClientHandler
         var key = new Key
         {
             Id = 1,
-            KeyIdentifier = "TestKey"
+            KeyIdentifier = "TestKey",
+            Brand = Brand.ASSA,
+            IsLost = false,
+
         };
         var jsonString = JsonSerializer.Serialize(key);
         var content = new StringContent(jsonString, Encoding.UTF8, MediaTypeNames.Application.Json);

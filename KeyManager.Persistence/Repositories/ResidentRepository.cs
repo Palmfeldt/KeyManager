@@ -12,30 +12,30 @@ public class ResidentRepository(DbContextOptions<AppDbContext> options) : IRepos
 
     public List<Resident> RetriveAll()
     {
-        return [.. context.Users];
+        return [.. context.Residents];
     }
 
     public Resident RetrieveById(int id)
     {
-        var user = context.Users.Find(id);
+        var user = context.Residents.Find(id);
         return user is null ? throw new KeyNotFoundException($"User with ID {id} not found.") : user;
     }
 
     public bool Delete(int id)
     {
-        if (context.Addresses.Any(a => a.User!.Id == id))
-            throw new KeyInUseException($"Key with ID {id} is in use.");
+        var resident = context.Residents.Find(id);
+        if (resident is null)
+            return false;
 
-        Resident user = new() { Id = id, FirstName = "Test", LastName = "Testsson" };
-        context.Users.Attach(user);
-        context.Users.Remove(user);
+        context.Residents.Attach(resident);
+        context.Residents.Remove(resident);
         context.SaveChanges();
         return true;
     }
 
     public bool Add(Resident obj)
     {
-        context.Users.Add(obj);
+        context.Residents.Add(obj);
         context.SaveChanges();
         return true;
     }
@@ -43,15 +43,15 @@ public class ResidentRepository(DbContextOptions<AppDbContext> options) : IRepos
     public bool Update(int id, Resident obj)
     {
         obj.Id = id;
-        var user = context.Users.Find(obj.Id) ?? throw new KeyNotFoundException($"User with ID {obj.Id} not found.");
-        context.Users.Update(user);
+        var user = context.Residents.Find(obj.Id) ?? throw new KeyNotFoundException($"User with ID {obj.Id} not found.");
+        context.Residents.Update(user);
         context.SaveChanges();
         return true;
     }
 
     public List<Resident> Search(long pnum)
     {
-        var users = context.Users.Where(u => u.Pnum == pnum).ToList();
+        var users = context.Residents.Where(u => u.Pnum == pnum).ToList();
 
         if (users.Count == 0)
             throw new KeyNotFoundException($"User with Pnum {pnum} not found.");
