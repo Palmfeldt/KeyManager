@@ -20,6 +20,5 @@ public class PropertyConfiguration : IEntityTypeConfiguration<Property>
         builder.Property(a => a.Address)
             .IsRequired()
             .HasMaxLength(50);
-
     }
 }

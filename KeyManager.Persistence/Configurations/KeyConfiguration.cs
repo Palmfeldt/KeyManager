@@ -1,6 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KeyManager.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using KeyManager.Domain.Models;
 
 namespace KeyManager.Persistence.Configurations;
 
@@ -13,7 +13,11 @@ public class KeyConfiguration : IEntityTypeConfiguration<Key>
             .ValueGeneratedOnAdd();
 
         builder.Property(k => k.KeyIdentifier)
-            .IsRequired()
+            .IsRequired(false)
             .HasMaxLength(50);
+        builder.Property(k => k.Brand)
+            .IsRequired(true);
+        builder.Property(k => k.IsLost)
+            .IsRequired(true);
     }
 }

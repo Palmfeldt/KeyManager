@@ -23,7 +23,7 @@ public class Property
     public DateTime? LeaseEnd { get; set; }
 
 
-    public int ResidentId { get; set; }
+    public int? ResidentId { get; set; }
     /// <summary>
     /// A Property can be associated with one user
     /// </summary>

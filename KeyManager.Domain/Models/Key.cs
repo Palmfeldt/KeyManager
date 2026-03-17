@@ -21,11 +21,11 @@ public class Key
 
     public bool IsLost { get; set; }
 
-    public int PropertyId { get; set; }
+    public int? PropertyId { get; set; }
 
     // A key can be used to unlock a single property, but a property can have multiple keys. This is a one-to-many relationship.
     public Property? Property { get; set; }
 
-    public int ResidentId { get; set; }
+    public int? ResidentId { get; set; }
     public Resident? Resident { get; set; }
 }
