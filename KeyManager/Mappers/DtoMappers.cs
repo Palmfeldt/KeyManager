@@ -11,7 +11,9 @@ public static class DtoMappers
         return new Key
         {
             Id = dto.Id,
-            KeyIdentifier = dto.KeyIdentifier
+            KeyIdentifier = dto.KeyIdentifier,
+            Brand = dto.Brand,
+
         };
     }
 
@@ -20,13 +22,14 @@ public static class DtoMappers
         return new KeyDto
         {
             Id = key.Id,
-            KeyIdentifier = key.KeyIdentifier
+            KeyIdentifier = key.KeyIdentifier,
+            Brand = key.Brand,
         };
     }
 
-    public static User ToModel(this UserDto dto)
+    public static Resident ToModel(this ResidentDto dto)
     {
-        return new User
+        return new Resident
         {
             Id = dto.Id,
             FirstName = dto.FirstName,
@@ -36,9 +39,9 @@ public static class DtoMappers
         };
     }
 
-    public static UserDto ToDto(this User user)
+    public static ResidentDto ToDto(this Resident user)
     {
-        return new UserDto
+        return new ResidentDto
         {
             Id = user.Id,
             FirstName = user.FirstName,
@@ -48,16 +51,16 @@ public static class DtoMappers
         };
     }
 
-    public static Address ToModel(this AddressDto dto)
+    public static Property ToModel(this PropertyDto dto)
     {
-        return new Address
+        return new Property
         {
             Id = dto.Id,
             LeaseStart = dto.LeaseStart,
             LeaseEnd = dto.LeaseEnd,
-            FullAddress = dto.FullAddress,
-            User = dto.User != null ? dto.User.ToModel() : null,
-            Key = dto.Key != null ? dto.Key.ToModel() : null
+            Address = dto.FullAddress,
+            Resident = dto.User?.ToModel(),
+            Keys = dto.Keys?.Select(k => k.ToModel()).ToList()
         };
     }
 

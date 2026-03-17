@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using KeyManager.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using KeyManager.Domain.Models;
 
 namespace KeyManager.Persistence.Configurations;
 
-public class AddressConfiguration : IEntityTypeConfiguration<Address>
+public class PropertyConfiguration : IEntityTypeConfiguration<Property>
 {
-    public void Configure(EntityTypeBuilder<Address> builder)
+    public void Configure(EntityTypeBuilder<Property> builder)
     {
         builder.HasKey(a => a.Id);
         builder.Property(a => a.Id)
@@ -17,11 +17,9 @@ public class AddressConfiguration : IEntityTypeConfiguration<Address>
 
         builder.Property(a => a.LeaseEnd);
 
-        builder.Property(a => a.FullAddress)
+        builder.Property(a => a.Address)
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasOne(a => a.User);
-        builder.HasOne(a => a.Key);
     }
 }

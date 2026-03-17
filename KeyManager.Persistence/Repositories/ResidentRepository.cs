@@ -6,16 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KeyManager.Persistence.Repositories;
 
-public class UserRepository(DbContextOptions<AppDbContext> options) : IRepository<User>
+public class ResidentRepository(DbContextOptions<AppDbContext> options) : IRepository<Resident>
 {
     private readonly AppDbContext context = new(options);
 
-    public List<User> RetriveAll()
+    public List<Resident> RetriveAll()
     {
         return [.. context.Users];
     }
 
-    public User RetrieveById(int id)
+    public Resident RetrieveById(int id)
     {
         var user = context.Users.Find(id);
         return user is null ? throw new KeyNotFoundException($"User with ID {id} not found.") : user;
@@ -26,21 +26,21 @@ public class UserRepository(DbContextOptions<AppDbContext> options) : IRepositor
         if (context.Addresses.Any(a => a.User!.Id == id))
             throw new KeyInUseException($"Key with ID {id} is in use.");
 
-        User user = new() { Id = id, FirstName = "Test", LastName = "Testsson" };
+        Resident user = new() { Id = id, FirstName = "Test", LastName = "Testsson" };
         context.Users.Attach(user);
         context.Users.Remove(user);
         context.SaveChanges();
         return true;
     }
 
-    public bool Add(User obj)
+    public bool Add(Resident obj)
     {
         context.Users.Add(obj);
         context.SaveChanges();
         return true;
     }
 
-    public bool Update(int id, User obj)
+    public bool Update(int id, Resident obj)
     {
         obj.Id = id;
         var user = context.Users.Find(obj.Id) ?? throw new KeyNotFoundException($"User with ID {obj.Id} not found.");
@@ -49,7 +49,7 @@ public class UserRepository(DbContextOptions<AppDbContext> options) : IRepositor
         return true;
     }
 
-    public List<User> Search(long pnum)
+    public List<Resident> Search(long pnum)
     {
         var users = context.Users.Where(u => u.Pnum == pnum).ToList();
 

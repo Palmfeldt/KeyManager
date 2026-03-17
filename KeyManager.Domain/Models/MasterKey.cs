@@ -2,8 +2,9 @@
 
 namespace KeyManager.Domain.Models;
 
-public class Key
+public class MasterKey
 {
+
     /// <summary>
     /// The unique identifier for the key.
     /// </summary>
@@ -19,13 +20,8 @@ public class Key
     /// </summary>
     public required Brand Brand { get; set; }
 
-    public bool IsLost { get; set; }
-
-    public int PropertyId { get; set; }
-
-    // A key can be used to unlock a single property, but a property can have multiple keys. This is a one-to-many relationship.
-    public Property? Property { get; set; }
-
-    public int ResidentId { get; set; }
-    public Resident? Resident { get; set; }
+    /// <summary>
+    /// A master key can be used to unlock multiple properties, and a property can be associated with multiple master keys. This is a many-to-many relationship.
+    /// </summary>
+    public List<Property>? Properties { get; set; }
 }

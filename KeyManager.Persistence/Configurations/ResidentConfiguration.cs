@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace KeyManager.Persistence.Configurations;
 
-public class UserConfiguration : IEntityTypeConfiguration<User>
+public class ResidentConfiguration : IEntityTypeConfiguration<Resident>
 {
-    public void Configure(EntityTypeBuilder<User> builder)
+    public void Configure(EntityTypeBuilder<Resident> builder)
     {
         builder.HasKey(u => u.Id);
         builder.Property(u => u.Id)

@@ -16,4 +16,8 @@
     <ProjectReference Include="..\KeyManager.Domain\KeyManager.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

@@ -29,8 +29,8 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IRepository<Address>, AddressRepository>();
-builder.Services.AddScoped<IRepository<User>, UserRepository>();
+builder.Services.AddScoped<IRepository<Address>, PropertyRepository>();
+builder.Services.AddScoped<IRepository<Resident>, ResidentRepository>();
 builder.Services.AddScoped<IRepository<Key>, KeyRepository>();
 
 builder.Services.AddProblemDetails(opts =>
